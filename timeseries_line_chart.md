@@ -6,7 +6,86 @@
 #### JS
 ```
 var chart = c3.generate({
+    bindto: '#myChart',
+    
+    data: {
+        type: 'spline',
+        columns: []
+    },
+    
+    axis: {
+        x: {
+        },
+        
+        y: {
+        }
+    },
+    
+    legend: {
+    }
+});
+```
+## x-Axis tick marks
+```
+data: {
+    x: 'x',
+    xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
+    columns: [
+        ['x', '', ...]
+    ]
+}
+```
+## X-Axis
+```
+axis: {
+    x: {
+        type: 'timeseries',
+        tick: {
+            format: '%b, %Y'
+        },
+        label: {
+          text: '',
+          position: 'outer-middle'
+        },
+        min: ,
+        max: ,
+        padding: {left: 0, right: 0}
+    }
+}
+```
+## Y-Axis
+```
+axis: {
+    y: {
+        label: {
+          text: 'Currency Value',
+          position: 'outer-middle'
+        },
+        min: 0,
+        padding: {bottom: 0, top: 100}
+    }
+}
+```
+
+## Legend
+```
+legend: {
+    show: true,
+    position: 'inset',
+    inset: {
+        anchor: 'top-right',
+        x: 10,
+        y: -10,
+        step: 1
+    }
+}
+```
+
+#### Example
+```
+var chart = c3.generate({
 bindto: '#myChart',
+
     data: {
         type: 'spline',
         x: 'x',
@@ -18,6 +97,7 @@ bindto: '#myChart',
             ['USD', 130, 340, 200, 500, 250, 350]
         ]
     },
+    
     axis: {
         x: {
             type: 'timeseries',
@@ -27,7 +107,7 @@ bindto: '#myChart',
             label: {
               text: 'Time',
               position: 'outer-middle'
-        		},
+        	},
             min: new Date('2013-01-01'),
             max: new Date('2013-06-17'),
             padding: {left: 0, right: 0}
@@ -37,14 +117,12 @@ bindto: '#myChart',
             label: {
               text: 'Currency Value',
               position: 'outer-middle'
-        		},
+        	},
             min: 0,
             padding: {bottom: 0, top: 100}
         }
     },
-    padding: {
-        right: 0
-    },
+    
     legend: {
         show: true,
         position: 'inset',
@@ -57,7 +135,6 @@ bindto: '#myChart',
     }
 });
 ```
-
 #### CSS
 ```
 /*-- Chart --*/
