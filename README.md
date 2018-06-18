@@ -1,2 +1,2 @@
 # C3
-* [line chart timeseries](#)
+* [line chart (timeseries)](#)
