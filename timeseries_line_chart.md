@@ -83,47 +83,45 @@ legend: {
 
 #### Example
 ```
-var chart = c3.generate({
-bindto: '#myChart',
+'use strict';
 
-    data: {
-        type: 'spline',
-        x: 'x',
-        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-        columns: [
-            //['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
-            ['x', '20130101', '20130202', '20130303', '20130404', '20130505', '20130606'],
-            ['JPY', 30, 200, 100, 400, 150, 250],
-            ['USD', 130, 340, 200, 500, 250, 350]
-        ]
-    },
-    
-    axis: {
-        x: {
+// constants
+const X_AXIS = 'x';
+const INCOMING_TIME_FORMAT = '%Y%m%d';
+const AXIS_LABEL_POSITION = 'outer-middle';
+
+
+// axis setting
+var xMin = new Date('2013-01-01');
+var xMax = new Date('2013-06-17');
+var yMin = 0;
+var yMax = 600;
+
+var xAxisSetting = {
             type: 'timeseries',
             tick: {
                 format: '%b, %Y'
             },
             label: {
               text: 'Time',
-              position: 'outer-middle'
+              position: AXIS_LABEL_POSITION
         	},
-            min: new Date('2013-01-01'),
-            max: new Date('2013-06-17'),
+            min: xMin,
+            max: xMax,
             padding: {left: 0, right: 0}
-        },
-
-        y: {
+        };
+		
+var yAxisSetting = {
             label: {
               text: 'Currency Value',
-              position: 'outer-middle'
+              position: AXIS_LABEL_POSITION
         	},
-            min: 0,
+            min: yMin,
             padding: {bottom: 0, top: 100}
-        }
-    },
-    
-    legend: {
+        };
+		
+// legend setting
+var legendSetting = {
         show: true,
         position: 'inset',
         inset: {
@@ -132,8 +130,32 @@ bindto: '#myChart',
             y: -10,
             step: 1
         }
-    }
-});
+    };
+
+// chart
+function drawLineChart(divId, columnData){
+
+	var chart = c3.generate({
+		bindto: divId,
+		data: {
+			type: 'spline',
+			x: X_AXIS,
+			xFormat: INCOMING_TIME_FORMAT,
+			columns: columnData
+		},
+		axis: {
+			x: xAxisSetting,
+			y: yAxisSetting
+		},
+		legend: legendSetting
+	});
+}
+// data
+var timeData = [X_AXIS, '20130101', '20130202', '20130303', '20130404', '20130505', '20130606'];
+var jpyData = ['JPY', 30, 200, 100, 400, 150, 250];
+var usdData = ['USD', 130, 340, 200, 500, 250, 350];
+
+drawLineChart('#myLineChart', [timeData, jpyData, usdData]);
 ```
 #### CSS
 ```
