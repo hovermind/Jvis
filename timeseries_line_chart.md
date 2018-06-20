@@ -45,7 +45,7 @@ data: {
 	},
 	label: {
 		text: 'Time',
-		position: 'outer-middle'
+		position: 'outer-center'
 	},
 	min: xMin,
 	max: xMax,
