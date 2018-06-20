@@ -1,91 +1,15 @@
-#### Html
+## Html
 ```
-<div id="myChart"></div>
-```
-
-#### JS
-```
-var chart = c3.generate({
-    bindto: '#myChart',
-    data: {
-        type: 'spline',
-        columns: []
-    },
-    
-    axis: {
-        x: {
-        },
-        
-        y: {
-        }
-    },
-    
-    legend: {
-    }
-});
-```
-## Time data format `xFormat`
-```
-data: {
-    x: 'x',
-    xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-    columns: [
-        ['x', '', '', ...]
-	[],
-	[]
-    ]
-}
-```
-## X axis setting
-```
- {
-	type: 'timeseries',
-	tick: {
-		format: '%b, %Y'
-	},
-	label: {
-		text: 'Time',
-		position: 'outer-center'
-	},
-	min: xMin,
-	max: xMax,
-	padding: {left: 0, right: 0}
-}
-```
-## Y axis setting
-```
-{
-	label: {
-	text: 'Currency Value',
-	position: 'outer-middle'
-	},
-	min: 0,
-	padding: {bottom: 0, top: 100}
-}
+<div id="myLineChart"></div>
 ```
 
-## Legend setting
-```
-{
-	show: true,
-	position: 'inset',
-	inset: {
-	    anchor: 'top-right',
-	    x: 10,
-	    y: -10,
-	    step: 1
-	}
-}
-```
-
-#### Example
+## JS
 ```
 'use strict';
 
 // constants
 const X_AXIS = 'x';
 const INCOMING_TIME_FORMAT = '%Y%m%d';
-const AXIS_LABEL_POSITION = 'outer-middle';
 
 
 // axis setting
@@ -101,7 +25,7 @@ var xAxisSetting = {
             },
             label: {
               text: 'Time',
-              position: AXIS_LABEL_POSITION
+              position: 'outer-center'
         	},
             min: xMin,
             max: xMax,
@@ -111,7 +35,7 @@ var xAxisSetting = {
 var yAxisSetting = {
             label: {
               text: 'Currency Value',
-              position: AXIS_LABEL_POSITION
+              position: 'outer-middle'
         	},
             min: yMin,
             padding: {bottom: 0, top: 100}
@@ -128,7 +52,12 @@ var legendSetting = {
             step: 1
         }
     };
-
+    
+var gridSetting = {
+  x: {show: true},
+  y: {show: true}
+};
+        
 // chart
 function drawLineChart(divId, columnData){
 
@@ -144,14 +73,14 @@ function drawLineChart(divId, columnData){
 			x: xAxisSetting,
 			y: yAxisSetting
 		},
-		legend: legendSetting
+		legend: legendSetting,
+    grid: gridSetting
 	});
 }
 // data
 var timeData = [X_AXIS, '20130101', '20130202', '20130303', '20130404', '20130505', '20130606'];
 var jpyData = ['JPY', 30, 200, 100, 400, 150, 250];
 var usdData = ['USD', 130, 340, 200, 500, 250, 350];
-
 drawLineChart('#myLineChart', [timeData, jpyData, usdData]);
 ```
 #### CSS
