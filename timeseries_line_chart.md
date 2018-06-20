@@ -7,7 +7,6 @@
 ```
 var chart = c3.generate({
     bindto: '#myChart',
-    
     data: {
         type: 'spline',
         columns: []
@@ -25,60 +24,58 @@ var chart = c3.generate({
     }
 });
 ```
-## x-Axis tick marks
+## Time data format `xFormat`
 ```
 data: {
     x: 'x',
     xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
     columns: [
-        ['x', '', ...]
+        ['x', '', '', ...]
+	[],
+	[]
     ]
 }
 ```
-## X-Axis
+## X axis setting
 ```
-axis: {
-    x: {
-        type: 'timeseries',
-        tick: {
-            format: '%b, %Y'
-        },
-        label: {
-          text: '',
-          position: 'outer-middle'
-        },
-        min: ,
-        max: ,
-        padding: {left: 0, right: 0}
-    }
-}
+var xAxisSetting = {
+            type: 'timeseries',
+            tick: {
+                format: '%b, %Y'
+            },
+            label: {
+              text: 'Time',
+              position: 'outer-middle'
+        	},
+            min: xMin,
+            max: xMax,
+            padding: {left: 0, right: 0}
+        };
 ```
-## Y-Axis
+## Y axis setting
 ```
-axis: {
-    y: {
-        label: {
-          text: 'Currency Value',
-          position: 'outer-middle'
-        },
-        min: 0,
-        padding: {bottom: 0, top: 100}
-    }
-}
+var yAxisSetting = {
+            label: {
+              text: 'Currency Value',
+              position: 'outer-middle'
+        	},
+            min: 0,
+            padding: {bottom: 0, top: 100}
+        };
 ```
 
-## Legend
+## Legend setting
 ```
-legend: {
-    show: true,
-    position: 'inset',
-    inset: {
-        anchor: 'top-right',
-        x: 10,
-        y: -10,
-        step: 1
-    }
-}
+var legendSetting = {
+        show: true,
+        position: 'inset',
+        inset: {
+            anchor: 'top-right',
+            x: 10,
+            y: -10,
+            step: 1
+        }
+    };
 ```
 
 #### Example
