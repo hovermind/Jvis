@@ -1,7 +1,7 @@
 ## C3
 * [Config object](#)
 * [Data](https://github.com/hovermind/Jvis/blob/master/c3_data.md)
-* [xFormat](#)
+* [xFormat](https://github.com/hovermind/Jvis/blob/master/c3_xformat.md)
 * [line chart (timeseries)](https://github.com/hovermind/Jvis/blob/master/timeseries_line_chart.md)
 
 ## D3
