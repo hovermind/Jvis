@@ -1,5 +1,5 @@
 ## C3
-* [Config object](#)
+* [Config object](https://github.com/hovermind/Jvis/blob/master/c3_config.md)
 * [Data](https://github.com/hovermind/Jvis/blob/master/c3_data.md)
 * [xFormat](https://github.com/hovermind/Jvis/blob/master/c3_xformat.md)
 * [Legend](https://github.com/hovermind/Jvis/blob/master/c3_legend.md)
