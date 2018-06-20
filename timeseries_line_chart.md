@@ -38,44 +38,44 @@ data: {
 ```
 ## X axis setting
 ```
-var xAxisSetting = {
-            type: 'timeseries',
-            tick: {
-                format: '%b, %Y'
-            },
-            label: {
-              text: 'Time',
-              position: 'outer-middle'
-        	},
-            min: xMin,
-            max: xMax,
-            padding: {left: 0, right: 0}
-        };
+ {
+	type: 'timeseries',
+	tick: {
+		format: '%b, %Y'
+	},
+	label: {
+		text: 'Time',
+		position: 'outer-middle'
+	},
+	min: xMin,
+	max: xMax,
+	padding: {left: 0, right: 0}
+}
 ```
 ## Y axis setting
 ```
-var yAxisSetting = {
-            label: {
-              text: 'Currency Value',
-              position: 'outer-middle'
-        	},
-            min: 0,
-            padding: {bottom: 0, top: 100}
-        };
+{
+	label: {
+	text: 'Currency Value',
+	position: 'outer-middle'
+	},
+	min: 0,
+	padding: {bottom: 0, top: 100}
+}
 ```
 
 ## Legend setting
 ```
-var legendSetting = {
-        show: true,
-        position: 'inset',
-        inset: {
-            anchor: 'top-right',
-            x: 10,
-            y: -10,
-            step: 1
-        }
-    };
+{
+	show: true,
+	position: 'inset',
+	inset: {
+	    anchor: 'top-right',
+	    x: 10,
+	    y: -10,
+	    step: 1
+	}
+}
 ```
 
 #### Example
