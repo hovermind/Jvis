@@ -3,6 +3,7 @@
 * [Data](https://github.com/hovermind/Jvis/blob/master/c3_data.md)
 * [xFormat](https://github.com/hovermind/Jvis/blob/master/c3_xformat.md)
 * [Legend](https://github.com/hovermind/Jvis/blob/master/c3_legend.md)
+* [X axis](https://github.com/hovermind/Jvis/blob/master/c3_x_axis.md)
 * [line chart (timeseries)](https://github.com/hovermind/Jvis/blob/master/timeseries_line_chart.md)
 
 ## D3
