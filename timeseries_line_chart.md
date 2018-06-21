@@ -5,83 +5,137 @@
 
 ## JS
 ```
-'use strict';
-
 // constants
-const X_AXIS = 'x';
+const X_AXIS = 'timestamp';
 const INCOMING_TIME_FORMAT = '%Y%m%d';
 
-
 // axis setting
-var xMin = new Date('2013-01-01');
-var xMax = new Date('2013-06-17');
+var xMin = '20180101';
+var xMax = '20180420';
 var yMin = 0;
-var yMax = 600;
 
 var xAxisSetting = {
-            type: 'timeseries',
-            tick: {
-                format: '%b, %Y'
-            },
-            label: {
-              text: 'Time',
-              position: 'outer-center'
-        	},
-            min: xMin,
-            max: xMax,
-            padding: {left: 0, right: 0}
-        };
-		
+  type: 'timeseries',
+  tick: {
+    fit: true,
+    format: "%Y-%m-%d",
+    count: 8,
+    rotate: 45
+  },
+  label: {
+    text: 'Date',
+    position: 'outer-center'
+  },
+  min: xMin,
+  max: xMax,
+  padding: {
+    left: 0,
+    right: 0
+  },
+  height: 70
+};
+
 var yAxisSetting = {
-            label: {
-              text: 'Currency Value',
-              position: 'outer-middle'
-        	},
-            min: yMin,
-            padding: {bottom: 0, top: 100}
-        };
-		
+  label: {
+    text: 'Currency Value',
+    position: 'outer-middle'
+  },
+  min: yMin,
+  padding: {
+    bottom: 0,
+    top: 50
+  }
+};
+
 // legend setting
 var legendSetting = {
-        show: true,
-        position: 'inset',
-        inset: {
-            anchor: 'top-right',
-            x: 10,
-            y: -10,
-            step: 1
-        }
-    };
-    
-var gridSetting = {
-  x: {show: true},
-  y: {show: true}
+  show: true,
+  position: 'inset',
+  inset: {
+    anchor: 'top-right',
+    x: 10,
+    y: -10,
+    step: 1
+  }
 };
-        
-// chart
-function drawLineChart(divId, columnData){
 
-	var chart = c3.generate({
-		bindto: divId,
-		data: {
-			type: 'spline',
-			x: X_AXIS,
-			xFormat: INCOMING_TIME_FORMAT,
-			columns: columnData
-		},
-		axis: {
-			x: xAxisSetting,
-			y: yAxisSetting
-		},
-		legend: legendSetting,
+// grid setting
+var gridSetting = {
+  x: {
+    show: true
+  },
+  y: {
+    show: true
+  }
+};
+
+// chart
+function drawLineChartWithColumnData(divId, data) {
+
+  var chart = c3.generate({
+    bindto: divId,
+    data: data,
+    axis: {
+      x: xAxisSetting,
+      y: yAxisSetting
+    },
+    legend: legendSetting,
     grid: gridSetting
-	});
+  });
+}
+
+function drawLineChartWithJsonData(divId, jsonData, keysData) {
+
+  var chart = c3.generate({
+    bindto: divId,
+    data: {
+      type: 'spline',
+      x: X_AXIS,
+      xFormat: INCOMING_TIME_FORMAT,
+      json: jsonData,
+      keys: keysData
+    },
+    axis: {
+      x: xAxisSetting,
+      y: yAxisSetting
+    },
+    legend: legendSetting,
+    grid: gridSetting,
+    padding: {
+      right: 10
+    }
+  });
 }
 // data
 var timeData = [X_AXIS, '20130101', '20130202', '20130303', '20130404', '20130505', '20130606'];
 var jpyData = ['JPY', 30, 200, 100, 400, 150, 250];
 var usdData = ['USD', 130, 340, 200, 500, 250, 350];
-drawLineChart('#myLineChart', [timeData, jpyData, usdData]);
+
+var jsonData = [{
+  timestamp: '20180110',
+  JPY: 30,
+  USD: 130
+}, {
+  timestamp: '20180210',
+  JPY: 200,
+  USD: 340
+}, {
+  timestamp: '20180310',
+  JPY: 100,
+  USD: 200
+}, {
+  timestamp: '20180410',
+  JPY: 400,
+  USD: 500
+}];
+
+var keysData = {
+  x: X_AXIS,
+  value: ['JPY', 'USD']
+};
+
+
+drawLineChartWithJsonData('#myLineChart', jsonData, keysData);
 ```
 #### CSS
 ```
