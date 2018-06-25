@@ -5,13 +5,15 @@
 
 ## JS
 ```
+'use strict';
+
 // constants
 const X_AXIS = 'timestamp';
-const INCOMING_TIME_FORMAT = '%Y%m%d';
+const INCOMING_TIME_FORMAT = '%s';
 
 // axis setting
-var xMin = '20180101';
-var xMax = '20180420';
+var xMin = 1514770562000;
+var xMax = 1526780162000;
 var yMin = 0;
 
 var xAxisSetting = {
@@ -26,11 +28,11 @@ var xAxisSetting = {
     text: 'Date',
     position: 'outer-center'
   },
-  min: xMin,
-  max: xMax,
+  //min: xMin,
+  //max: xMax,
   padding: {
-    left: 0,
-    right: 0
+    //left: 0,
+    //right: 100
   },
   height: 70
 };
@@ -69,20 +71,6 @@ var gridSetting = {
   }
 };
 
-// chart
-function drawLineChartWithColumnData(divId, data) {
-
-  var chart = c3.generate({
-    bindto: divId,
-    data: data,
-    axis: {
-      x: xAxisSetting,
-      y: yAxisSetting
-    },
-    legend: legendSetting,
-    grid: gridSetting
-  });
-}
 
 function drawLineChartWithJsonData(divId, jsonData, keysData) {
 
@@ -106,28 +94,42 @@ function drawLineChartWithJsonData(divId, jsonData, keysData) {
     }
   });
 }
-// data
-var timeData = [X_AXIS, '20130101', '20130202', '20130303', '20130404', '20130505', '20130606'];
-var jpyData = ['JPY', 30, 200, 100, 400, 150, 250];
-var usdData = ['USD', 130, 340, 200, 500, 250, 350];
 
-var jsonData = [{
-  timestamp: '20180110',
+ var jsonData = [{
+  timestamp: 1516586421000,
   JPY: 30,
   USD: 130
 }, {
-  timestamp: '20180210',
+  timestamp: 1519264821000,
   JPY: 200,
   USD: 340
 }, {
-  timestamp: '20180310',
+  timestamp: 1521684021000,
   JPY: 100,
   USD: 200
 }, {
-  timestamp: '20180410',
+  timestamp: 1524362421000,
   JPY: 400,
   USD: 500
 }];
+
+/* var jsonData = [{
+  timestamp: 1516586421,
+  JPY: 30,
+  USD: 130
+}, {
+  timestamp: 1519264821,
+  JPY: 200,
+  USD: 340
+}, {
+  timestamp: 1521684021,
+  JPY: 100,
+  USD: 200
+}, {
+  timestamp: 1524362421,
+  JPY: 400,
+  USD: 500
+}]; */
 
 var keysData = {
   x: X_AXIS,
@@ -136,262 +138,5 @@ var keysData = {
 
 
 drawLineChartWithJsonData('#myLineChart', jsonData, keysData);
-```
-#### CSS
-```
-/*-- Chart --*/
 
-.c3 svg {
-  font: 10px sans-serif;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.c3 path,
-.c3 line {
-  fill: none;
-  stroke: #000;
-}
-
-.c3 text {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
-
-.c3-legend-item-tile,
-.c3-xgrid-focus,
-.c3-ygrid,
-.c3-event-rect,
-.c3-bars path {
-  shape-rendering: crispEdges;
-}
-
-.c3-chart-arc path {
-  stroke: #fff;
-}
-
-.c3-chart-arc rect {
-  stroke: white;
-  stroke-width: 1;
-}
-
-.c3-chart-arc text {
-  fill: #fff;
-  font-size: 13px;
-}
-
-
-/*-- Axis --*/
-
-
-/*-- Grid --*/
-
-.c3-grid line {
-  stroke: #aaa;
-}
-
-.c3-grid text {
-  fill: #aaa;
-}
-
-.c3-xgrid,
-.c3-ygrid {
-  stroke-dasharray: 3 3;
-}
-
-
-/*-- Text on Chart --*/
-
-.c3-text.c3-empty {
-  fill: #808080;
-  font-size: 2em;
-}
-
-
-/*-- Line --*/
-
-.c3-line {
-  stroke-width: 1px;
-}
-
-
-/*-- Point --*/
-
-.c3-circle._expanded_ {
-  stroke-width: 1px;
-  stroke: white;
-}
-
-.c3-selected-circle {
-  fill: white;
-  stroke-width: 2px;
-}
-
-
-/*-- Bar --*/
-
-.c3-bar {
-  stroke-width: 0;
-}
-
-.c3-bar._expanded_ {
-  fill-opacity: 1;
-  fill-opacity: 0.75;
-}
-
-
-/*-- Focus --*/
-
-.c3-target.c3-focused {
-  opacity: 1;
-}
-
-.c3-target.c3-focused path.c3-line,
-.c3-target.c3-focused path.c3-step {
-  stroke-width: 2px;
-}
-
-.c3-target.c3-defocused {
-  opacity: 0.3 !important;
-}
-
-
-/*-- Region --*/
-
-.c3-region {
-  fill: steelblue;
-  fill-opacity: .1;
-}
-
-
-/*-- Brush --*/
-
-.c3-brush .extent {
-  fill-opacity: .1;
-}
-
-
-/*-- Select - Drag --*/
-
-
-/*-- Legend --*/
-
-.c3-legend-item {
-  font-size: 12px;
-}
-
-.c3-legend-item-hidden {
-  opacity: 0.15;
-}
-
-.c3-legend-background {
-  opacity: 0.75;
-  fill: white;
-  stroke: lightgray;
-  stroke-width: 1;
-}
-
-
-/*-- Title --*/
-
-.c3-title {
-  font: 14px sans-serif;
-}
-
-
-/*-- Tooltip --*/
-
-.c3-tooltip-container {
-  z-index: 10;
-}
-
-.c3-tooltip {
-  border-collapse: collapse;
-  border-spacing: 0;
-  background-color: #fff;
-  empty-cells: show;
-  -webkit-box-shadow: 7px 7px 12px -9px #777777;
-  -moz-box-shadow: 7px 7px 12px -9px #777777;
-  box-shadow: 7px 7px 12px -9px #777777;
-  opacity: 0.9;
-}
-
-.c3-tooltip tr {
-  border: 1px solid #CCC;
-}
-
-.c3-tooltip th {
-  background-color: #aaa;
-  font-size: 14px;
-  padding: 2px 5px;
-  text-align: left;
-  color: #FFF;
-}
-
-.c3-tooltip td {
-  font-size: 13px;
-  padding: 3px 6px;
-  background-color: #fff;
-  border-left: 1px dotted #999;
-}
-
-.c3-tooltip td > span {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-right: 6px;
-}
-
-.c3-tooltip td.value {
-  text-align: right;
-}
-
-
-/*-- Area --*/
-
-.c3-area {
-  stroke-width: 0;
-  opacity: 0.2;
-}
-
-
-/*-- Arc --*/
-
-.c3-chart-arcs-title {
-  dominant-baseline: middle;
-  font-size: 1.3em;
-}
-
-.c3-chart-arcs .c3-chart-arcs-background {
-  fill: #e0e0e0;
-  stroke: #FFF;
-}
-
-.c3-chart-arcs .c3-chart-arcs-gauge-unit {
-  fill: #000;
-  font-size: 16px;
-}
-
-.c3-chart-arcs .c3-chart-arcs-gauge-max {
-  fill: #777;
-}
-
-.c3-chart-arcs .c3-chart-arcs-gauge-min {
-  fill: #777;
-}
-
-.c3-chart-arc .c3-gauge-value {
-  fill: #000;
-  /*  font-size: 28px !important;*/
-}
-
-.c3-chart-arc.c3-target g path {
-  opacity: 1;
-}
-
-.c3-chart-arc.c3-target.c3-focused g path {
-  opacity: 1;
-}cused g path {
-  opacity: 1;
-}
 ```
