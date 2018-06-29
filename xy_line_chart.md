@@ -157,3 +157,36 @@ define(["d3", "c3"], function(d3, c3){
 
 });
 ```
+
+## Using custom modules `chart.js`
+```
+require(["module/xy_chart"], function(XYChart){
+
+	let userChartData = [{
+	  amount: 15000,
+	  count: 25
+	}, {
+	  amount: 25000,
+	  count: 15
+	}, {
+	  amount: 5000,
+	  count: 150
+	}, {
+	  amount: 35000,
+	  count: 40
+	}];
+
+	let keys = ["amount"];
+
+	XYChart.drawTSChartWithJsonData({
+		DIV_ID: '#user_count_chart', 
+		JSON_DATA: userChartData, 
+		VALUE_KEYS: keys,
+		LINE_TYPE: 'line',
+		X_AXIS: 'count',
+		X_AXIS_LABEL: 'User Count',
+		X_AXIS_TICK_FORMAT: 'd',
+		Y_AXIS_LABEL: 'Amount'
+	});
+});
+```
