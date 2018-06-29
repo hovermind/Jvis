@@ -219,30 +219,27 @@ define(["jquery"], function($){
 
 #### Using API (ajax call)
 ```
-require(["module/ajax_helper"], function(AjaxHelper){
-	
+require(["module/ajax_helper", "module/timeseries_chart"], function(TimeSeriesChart){
+
 	'use strict';
 	
-	require(["module/timeseries_chart"], function(TimeSeriesChart){
-		
-		AjaxHelper.FetchData("http://localhost:8080/chart/ts", function(response){
-			
-			if(response.isError){
-				console.log('Failed to get data');
-				console.log('Cause: ' + response.message);
-				return;
-			}
+	AjaxHelper.FetchData("http://localhost:8080/chart/ts", function(response){
 
-			TimeSeriesChart.drawTSChartWithJsonData({
-				DIV_ID: '#balance_chart', 
-				JSON_DATA: response.data.dataList, 
-				VALUE_KEYS: response.data.keys,
-				X_AXIS: 'datetime',
-				LINE_TYPE: 'line',
-				Y_AXIS_LABEL: 'Currency Value'
-			});
+		if(response.isError){
+			console.log('Failed to get data');
+			console.log('Cause: ' + response.message);
+			return;
+		}
+
+		TimeSeriesChart.drawTSChartWithJsonData({
+			DIV_ID: '#balance_chart', 
+			JSON_DATA: response.data.dataList, 
+			VALUE_KEYS: response.data.keys,
+			X_AXIS: 'datetime',
+			LINE_TYPE: 'line',
+			Y_AXIS_LABEL: 'Currency Value'
 		});
-	
+	});
 });
 ```
 
