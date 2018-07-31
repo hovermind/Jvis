@@ -3,7 +3,7 @@
 -index.html
 -css
 -js
-  -main.js
+  -require_config.js
   -require.js
   -chart.js
   -lib
@@ -113,28 +113,27 @@ define(["d3", "c3"], function(d3, c3){
 
 	let GRID_SETTING = { x: { show: true }, y: { show: true } };
 
-	let obj = {
+	let ts = {
 		
 		Chart: '',
 		
-		drawTSChartWithJsonData: function(chartInfo) {
+		drawTSChartWithJsonData: ({
+			DIV_ID,
+			JSON_DATA,
+			VALUE_KEYS,
+			X_AXIS = 'datetime',
+			LINE_TYPE = 'spline',
+			Y_AXIS_LABEL = ''
+		}) => {
 			
-			let DIV_ID = chartInfo.DIV_ID;
-			let JSON_DATA = chartInfo.JSON_DATA;
-			let VALUE_KEYS = chartInfo.VALUE_KEYS;
-			
-			let LINE_TYPE = chartInfo.LINE_TYPE;
-			if(!LINE_TYPE){
-				LINE_TYPE = 'line'; // default
+			// required fields
+			if( !(DIV_ID && JSON_DATA && VALUE_KEYS) ){
+				console.log("one or more required fields absent");
+				return;
 			}
 			
-			let X_AXIS = chartInfo.X_AXIS;
-			if(!X_AXIS){
-				X_AXIS = 'datetime'; // default
-			}
-			
-			if(chartInfo.Y_AXIS_LABEL){ // default is set in Y_AXIS_SETTING
-				Y_AXIS_SETTING.label.text = chartInfo.Y_AXIS_LABEL;
+			if(Y_AXIS_LABEL){ // default is set in Y_AXIS_SETTING
+				Y_AXIS_SETTING.label.text = Y_AXIS_LABEL;
 			}
 			
 			// adjust x axis tick marks
@@ -155,11 +154,11 @@ define(["d3", "c3"], function(d3, c3){
 				padding: { right: 20 }
 			});
 			
-			this.Chart = chart;
+			ts.Chart = chart;
 		}
 	};
 	
-	return obj;
+	return ts;
 
 });
 ```
@@ -176,18 +175,31 @@ define(["jquery"], function($){
 		data : ''
 	};
 
-	let obj = {
+	let ajaxHelper = {
 		
-		FetchData: function(uri, callback){
+		FetchData: ({method = 'GET', uri, payload = '', dataType = 'json', callback}) => {
 			
-			// submit form
-			$.get(uri, {
+			let $call;
+			
+			if(method == 'GET'){
 				
-				contentType : 'application/json', // send as
-				dataType : 'json', // return as
+				$call = $.ajax(uri, {
+					type : method,
+					contentType : 'application/json', // send as
+					dataType : dataType, // return as
+				});
 				
-			}).done(function(data) {
+			} else {
+				
+				$call = $.ajax(uri, {
+					type : method,
+					contentType : 'application/json', // send as
+					dataType : dataType, // return as
+					data : payload
+				});
+			}
 
+			$call.done(data => {
 				//console.log(data);
 				
 				response.isError = false;
@@ -196,8 +208,7 @@ define(["jquery"], function($){
 				
 				callback(response);
 				
-			}).fail(function(error) {
-
+			}).fail(error => {
 				//console.log(error);
 				//console.log(error.statusText);
 				
@@ -206,12 +217,11 @@ define(["jquery"], function($){
 				response.data = '';
 
 				callback(response);
-
 			});
 		}
-	}
+	};
 	
-	return obj;
+	return ajaxHelper;
 });
 ```
 
@@ -219,27 +229,33 @@ define(["jquery"], function($){
 
 #### Using API (ajax call)
 ```
-require(["module/ajax_helper", "module/timeseries_chart"], function(TimeSeriesChart){
+require(['module/common', 'module/ajax_helper', 'module/timeseries_chart' ], function(Common, AjaxHelper, TimeSeriesChart) {
 
 	'use strict';
-	
-	AjaxHelper.FetchData("http://localhost:8080/chart/ts", function(response){
 
-		if(response.isError){
-			console.log('Failed to get data');
-			console.log('Cause: ' + response.message);
-			return;
+	let chartUri = Common.getContextPathWithSlash() + "chart";
+
+	// treasury wallet chart
+	AjaxHelper.FetchData({
+		method : 'GET',
+		uri : `${chartUri}/treasury-wallet`,
+		callback : (response) => {
+
+			if (response.isError) {
+				console.log('Failed to get data');
+				console.log('Cause: ' + response.message);
+				return;
+			}
+
+			TimeSeriesChart.drawTSChartWithJsonData({
+				DIV_ID : '#treasury_wallet_chart',
+				JSON_DATA : response.data.dataList,
+				VALUE_KEYS : response.data.keys,
+				X_AXIS : 'datetime',
+				Y_AXIS_LABEL : 'Currency Value'
+			});
 		}
-
-		TimeSeriesChart.drawTSChartWithJsonData({
-			DIV_ID: '#balance_chart', 
-			JSON_DATA: response.data.dataList, 
-			VALUE_KEYS: response.data.keys,
-			X_AXIS: 'datetime',
-			LINE_TYPE: 'line',
-			Y_AXIS_LABEL: 'Currency Value'
-		});
-	});
+	});	
 });
 ```
 
