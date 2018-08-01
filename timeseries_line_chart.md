@@ -94,7 +94,8 @@ define(["d3", "c3"], function(d3, c3){
 	'use strict';
 
 	// constants
-	const INCOMING_TIME_FORMAT = '%Q'; // timestamp in milliseconds
+	const INCOMING_TIME_FORMAT = '%Q'; // '%Q' => timestamp in milliseconds
+	// Note: for type: 'timeseries' (X_AXIS_SETTING) xFormat: INCOMING_TIME_FORMAT might be ignored
 
 	// axis setting
 	let X_AXIS_SETTING = {
