@@ -17,11 +17,11 @@
     -ajax_helper.js
 ```
 Downloads:
-* [jQuery](#)
-* [D3](#)
-* [C3](#)
-* [require.js](#)
-* [C3.css](#)
+* [jQuery](https://jquery.com/download/)
+* [D3](https://github.com/d3/d3/releases)
+* [C3 (C3.js + C3.css)](https://github.com/c3js/c3/releases)
+* [require.js](https://github.com/requirejs/requirejs/releases)
+
 
 Create:
 * my_chart.css (if you need your own styling)
