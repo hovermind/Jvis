@@ -14,9 +14,11 @@
     -timeseries_chart.js
     -ajax_helper.js
 ```
-Local API (Spring boot) URI : `http://localhost:8080/chart/ts`
 
-## Html `index.html`
+## API
+API running on localhost => (Spring boot) URI : `http://localhost:8080/chart`
+
+## Html `chart.html`
 ```
 <!doctype html>
 <html>
@@ -28,7 +30,8 @@ Local API (Spring boot) URI : `http://localhost:8080/chart/ts`
   
   <link rel="stylesheet" href="./css/line_chart.css">
   
-  <script data-main="js/main.js" src="js/require.js"></script>
+  <script src="js/require.js"></script>
+  <script src="js/require_config.js"></script>
   
   <style>
 	h2{ text-align: center;}
@@ -54,10 +57,10 @@ Local API (Spring boot) URI : `http://localhost:8080/chart/ts`
 
 ```
 
-## RequireJS config (main entry point) `main.js`
+## RequireJS config (main entry point) `require_config.js`
 ```
 requirejs.config({
-	//baseUri: 'js', // load all module from here
+	baseUri: contextPath + '/js', // load all module from here
 	paths: { // modules located in sub-dir of baseUri (baseUri will be prepended to path)
 		//"d3" : ["https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js", "lib/d3.min"],
 		//"c3" : ["https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.2/c3.min.js", "lib/c3.min"],
@@ -159,7 +162,6 @@ define(["d3", "c3"], function(d3, c3){
 	};
 	
 	return ts;
-
 });
 ```
 
@@ -233,12 +235,12 @@ require(['module/common', 'module/ajax_helper', 'module/timeseries_chart' ], fun
 
 	'use strict';
 
-	let chartUri = Common.getContextPathWithSlash() + "chart";
+	let chartUri = Common.getContextPath() + "/chart";
 
-	// treasury wallet chart
+	// balance chart
 	AjaxHelper.FetchData({
 		method : 'GET',
-		uri : `${chartUri}/treasury-wallet`,
+		uri : `${chartUri}/balance`,
 		callback : (response) => {
 
 			if (response.isError) {
@@ -248,14 +250,36 @@ require(['module/common', 'module/ajax_helper', 'module/timeseries_chart' ], fun
 			}
 
 			TimeSeriesChart.drawTSChartWithJsonData({
-				DIV_ID : '#treasury_wallet_chart',
+				DIV_ID : '#balance_chart',
 				JSON_DATA : response.data.dataList,
 				VALUE_KEYS : response.data.keys,
 				X_AXIS : 'datetime',
 				Y_AXIS_LABEL : 'Currency Value'
 			});
 		}
-	});	
+	});
+	
+	// count chart
+	AjaxHelper.FetchData({
+		method : 'GET',
+		uri : `${chartUri}/count`,
+		callback : (response) => {
+
+			if (response.isError) {
+				console.log('Failed to get data');
+				console.log('Cause: ' + response.message);
+				return;
+			}
+
+			TimeSeriesChart.drawTSChartWithJsonData({
+				DIV_ID : '#count_chart',
+				JSON_DATA : response.data.dataList,
+				VALUE_KEYS : response.data.keys,
+				X_AXIS : 'datetime',
+				Y_AXIS_LABEL : 'Count'
+			});
+		}
+	});
 });
 ```
 
