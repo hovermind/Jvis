@@ -6,12 +6,12 @@
   - my_chart.css
 -js
   -require_config.js
-  -require.js
   -my_chart.js
   -lib
     -d3.js
     -c3.js
     -jquery.js
+    -require.js
   -module
     -timeseries_chart.js
     -ajax_helper.js
@@ -46,7 +46,7 @@ API running on localhost => (Spring boot) URI : `http://localhost:8080/my_chart`
   <link rel="stylesheet" href="./css/c3.css">
   <link rel="stylesheet" href="./css/my_chart.css">
   
-  <script src="js/require.js"></script>
+  <script src="js/lib/require.js"></script>
   <script src="js/require_config.js"></script>
   
   <style>
