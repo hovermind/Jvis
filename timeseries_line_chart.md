@@ -78,11 +78,9 @@ API running on localhost => (Spring boot) URI : `http://localhost:8080/my_chart`
 requirejs.config({
 	baseUri: contextPath + '/js', // load all module from here
 	paths: { // modules located in sub-dir of baseUri (baseUri will be prepended to path)
-		//"d3" : ["https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js", "lib/d3.min"],
-		//"c3" : ["https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.2/c3.min.js", "lib/c3.min"],
-		d3 : ["lib/d3"],
-		c3 : ["lib/c3"],
-		'jquery' : ["lib/jquery"]
+		"d3" : ["https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js", "lib/d3.min"],
+		"c3" : ["https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.2/c3.min.js", "lib/c3.min"],
+		'jquery' : ["https://code.jquery.com/jquery-3.3.1.min.js", "lib/jquery"]
 	}
 });
 ```
