@@ -1,11 +1,13 @@
 ## Folder structure
 ```
--index.html
+-my_chart.html
 -css
+  - c3.css
+  - my_chart.css
 -js
   -require_config.js
   -require.js
-  -chart.js
+  -my_chart.js
   -lib
     -d3.js
     -c3.js
@@ -14,11 +16,24 @@
     -timeseries_chart.js
     -ajax_helper.js
 ```
+Downloads:
+* [jQuery](#)
+* [D3](#)
+* [C3](#)
+* [require.js](#)
+* [C3.css](#)
+
+Create:
+* my_chart.css (if you need your own styling)
+* ajax_helper.js (AMD module)
+* timeseries_chart.js (AMD module)
+* my_chart.js (here we will use AMD modules)
+
 
 ## API
-API running on localhost => (Spring boot) URI : `http://localhost:8080/chart`
+API running on localhost => (Spring boot) URI : `http://localhost:8080/my_chart`
 
-## Html `chart.html`
+## Html `my_chart.html`
 ```
 <!doctype html>
 <html>
@@ -28,7 +43,8 @@ API running on localhost => (Spring boot) URI : `http://localhost:8080/chart`
 
   <title>C3 Line Chart</title>
   
-  <link rel="stylesheet" href="./css/line_chart.css">
+  <link rel="stylesheet" href="./css/c3.css">
+  <link rel="stylesheet" href="./css/my_chart.css">
   
   <script src="js/require.js"></script>
   <script src="js/require_config.js"></script>
@@ -227,15 +243,15 @@ define(["jquery"], function($){
 });
 ```
 
-## Using custom modules `chart.js`
+## Using custom modules `my_chart.js`
 
 #### Using API (ajax call)
 ```
-require(['module/common', 'module/ajax_helper', 'module/timeseries_chart' ], function(Common, AjaxHelper, TimeSeriesChart) {
+require(['module/ajax_helper', 'module/timeseries_chart' ], function(AjaxHelper, TimeSeriesChart) {
 
 	'use strict';
 
-	let chartUri = Common.getContextPath() + "/chart";
+	let chartUri = 'http://localhost:8080' + "/my_chart";
 
 	// balance chart
 	AjaxHelper.FetchData({
