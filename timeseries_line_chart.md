@@ -16,18 +16,18 @@
     -timeseries_chart.js
     -ajax_helper.js
 ```
-Downloads:
+#### Downloads:
 * [jQuery](https://jquery.com/download/)
 * [D3](https://github.com/d3/d3/releases)
 * [C3 (C3.js + C3.css)](https://github.com/c3js/c3/releases)
 * [require.js](https://github.com/requirejs/requirejs/releases)
 
 
-Create:
-* my_chart.css (if you need your own styling)
-* ajax_helper.js (AMD module)
-* timeseries_chart.js (AMD module)
-* my_chart.js (here we will use AMD modules)
+#### Create:
+* `my_chart.css` (if you need your own styling)
+* `ajax_helper.js` (AMD module)
+* `timeseries_chart.js` (AMD module)
+* `my_chart.js` (here we will use AMD modules)
 
 
 ## API
