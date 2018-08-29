@@ -8,6 +8,7 @@
 * [Grid](https://github.com/hovermind/Jvis/blob/master/c3_grid.md)
 * [Timeseries line chart](https://github.com/hovermind/Jvis/blob/master/timeseries_line_chart.md)
 * [XY line chart](https://github.com/hovermind/Jvis/blob/master/xy_line_chart.md)
+* [Point (dot) Clipping Fix](https://github.com/hovermind/Jvis/blob/master/clip-path-fix.md)
 
 ## D3
 * [Usage steps](https://github.com/hovermind/Jvis/blob/master/d3_usage_steps.md)
