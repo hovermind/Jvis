@@ -94,73 +94,86 @@ define(["d3", "c3"], function(d3, c3){
 	'use strict';
 
 	// constants
-	const INCOMING_TIME_FORMAT = '%Q'; // '%Q' => timestamp in milliseconds
-	// Note: for type: 'timeseries' (X_AXIS_SETTING) xFormat: INCOMING_TIME_FORMAT might be ignored
+	const D3_FLAG_TIMESTAMP_MILLIS = '%Q'; // timestamp in milliseconds
+	const D3_FLAG_YYYY_MM_DD = '%Y-%m-%d';
+	const INCOMING_TIME_FORMAT = '%Y-%m-%d'; 
 
 	// axis setting
 	let X_AXIS_SETTING = {
 	  type: 'timeseries',
 	  tick: {
 		fit: true,
-		format: "%Y-%m-%d",
-		rotate: 45
+		format: D3_FLAG_YYYY_MM_DD,
+		rotate: -45
 	  },
-	  label: { text: 'Datetime', position: 'outer-center' },
+	  label: { text: 'Date', position: 'inner-center' },
 	  //min: xMin,
 	  //max: xMax,
-	  //padding: { left: 0, right: 100 },
+	  padding: { left: 0, right: 100 },
 	  //height: 50
 	};
 
-	let Y_AXIS_SETTING = {
-	  label: { text: 'Value', position: 'outer-middle' },
-	  min: 0,
-	  padding: { bottom: 0, top: 50 }
-	};
-
-	let LEGEND_SETTING = {
-	  show: true,
-	  position: 'inset',
-	  inset: {
-		anchor: 'top-right',
-		x: 10,
-		y: -10,
-		step: 1
-	  }
-	};
+	/* To prevent error, Y_AXIS_SETTING and LEGEND_SETTING are placed inside function */
 
 	let GRID_SETTING = { x: { show: true }, y: { show: true } };
 
 	let ts = {
 		
-		Chart: '',
+		Chart: {},
 		
 		drawTSChartWithJsonData: ({
 			DIV_ID,
 			JSON_DATA,
 			VALUE_KEYS,
-			X_AXIS = 'datetime',
-			LINE_TYPE = 'spline',
+			X_AXIS = 'date',
+			LINE_TYPE = 'line',
 			Y_AXIS_LABEL = ''
 		}) => {
 			
-			// required fields
-			if( !(DIV_ID && JSON_DATA && VALUE_KEYS) ){
-				console.log("one or more required fields absent");
+			// data check
+			if( !(JSON_DATA && VALUE_KEYS) ){
+				console.log("Chart Data: Empty");
 				return;
 			}
 			
-			if(Y_AXIS_LABEL){ // default is set in Y_AXIS_SETTING
-				Y_AXIS_SETTING.label.text = Y_AXIS_LABEL;
+			// required fields
+			if( !(DIV_ID) ){
+				console.log("Char id can not be null");
+				return;
 			}
 			
 			// adjust x axis tick marks
-			X_AXIS_SETTING.tick.count = JSON_DATA.length * 2;
+			let dataLength = JSON_DATA.length;
+			X_AXIS_SETTING.tick.count = dataLength * 2;
+			
+			let legendRows = Math.ceil(VALUE_KEYS.length / 5);
+			//console.log(legendRows);
+			
+			// to prevent y-axis label change when switching to inspect mode
+			let Y_AXIS_SETTING = {
+				label: { text: Y_AXIS_LABEL, position: 'outer-middle' },
+				min: 0,
+				padding: { bottom: 0, top: (100  +  legendRows * 10) }
+			};
+			
+
+			
+			let LEGEND_SETTING = {
+					  show: true,
+					  position: 'inset',
+					  inset: {
+						anchor: 'top-right',
+						x: 10,
+						y: -10,
+						step: legendRows
+					  }
+					};
+			//console.log(LEGEND_SETTING);
 			
 			let chart = c3.generate({
 				bindto: DIV_ID,
 				data: {
-				  xFormat: INCOMING_TIME_FORMAT,
+				  xFormat: D3_FLAG_YYYY_MM_DD,
 				  type: LINE_TYPE,
 				  x: X_AXIS,
 				  json: JSON_DATA,
@@ -172,11 +185,19 @@ define(["d3", "c3"], function(d3, c3){
 				padding: { right: 20 }
 			});
 			
+			// point (dot on axis) clipping fix
+			let chartLayer = d3.select(chart.element).select("." + c3.chart.internal.fn.CLASS.chart);
+			let chartLayerParentNode = chartLayer.node().parentNode;
+			let chartLayerNode = chartLayer.remove();
+			chartLayerParentNode.appendChild(chartLayerNode.node());
+			chartLayer.attr("clip-path", null);
+			
 			ts.Chart = chart;
 		}
 	};
 	
 	return ts;
+
 });
 ```
 
